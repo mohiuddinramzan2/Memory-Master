@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+  <!-- ===================== SEO META TAGS ===================== -->
+  <title>Memory Master | Modern Memory Test Game</title>
+  <meta name="description" content="Memory Master — একটি আধুনিক, Responsive Memory Card Matching Game। Easy থেকে Expert পর্যন্ত ৪টি Difficulty, ৬টি থিম, Achievement System এবং Statistics সহ খেলুন সম্পূর্ণ ফ্রি, কোনো ইন্সটল ছাড়াই ব্রাউজারে।" />
+  <meta name="keywords" content="memory game, memory test, card matching game, brain game, puzzle game, html5 game, javascript game, memory master" />
+  <meta name="author" content="Memory Master Team" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#6c5ce7" />
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Memory Master | Modern Memory Test Game" />
+  <meta property="og:description" content="আধুনিক Glassmorphism ডিজাইনের মেমোরি কার্ড গেম — ৪টি ডিফিকাল্টি, ৬টি থিম, অ্যাচিভমেন্ট ও স্ট্যাটিসটিক্স সহ।" />
+  <meta property="og:image" content="assets/images/og-banner.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- ===================== FAVICON ===================== -->
+  <link rel="icon" type="image/png" href="assets/icons/favicon.png" />
+
+  <!-- ===================== FONTS & ICONS ===================== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Baloo+Da+2:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- ===================== CUSTOM STYLES ===================== -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body data-theme="dark" data-card-theme="emoji">
+
+  <!-- ===================== ANIMATED BACKGROUND ===================== -->
+  <div class="bg-decoration" aria-hidden="true">
+    <span class="blob blob-1"></span>
+    <span class="blob blob-2"></span>
+    <span class="blob blob-3"></span>
+  </div>
+
+  <!-- ===================== LOADER ===================== -->
+  <div id="loader" class="loader-screen" role="status" aria-live="polite">
+    <div class="loader-brain">🧠</div>
+    <p>লোড হচ্ছে...</p>
+  </div>
+
+  <!-- ===================== TOP UTILITY BAR ===================== -->
+  <header class="topbar">
+    <button id="themeToggleBtn" class="icon-btn" aria-label="ডার্ক/লাইট মোড পরিবর্তন করুন" title="থিম পরিবর্তন">
+      <i class="fa-solid fa-moon" aria-hidden="true"></i>
+    </button>
+    <div class="logo" aria-hidden="true">
+      <i class="fa-solid fa-brain"></i> <span>Memory Master</span>
+    </div>
+    <button id="soundToggleBtn" class="icon-btn" aria-label="সাউন্ড অন/অফ করুন" title="সাউন্ড">
+      <i class="fa-solid fa-volume-high" aria-hidden="true"></i>
+    </button>
+  </header>
+
+  <main id="app" role="main">
+
+    <!-- ===================== HOME SCREEN ===================== -->
+    <section id="homeScreen" class="screen active-screen" aria-labelledby="homeTitle">
+      <div class="glass-card home-card">
+        <h1 id="homeTitle" class="game-title">
+          <i class="fa-solid fa-brain" aria-hidden="true"></i> Memory Master
+        </h1>
+        <p class="subtitle">তোমার স্মৃতিশক্তি যাচাই করো এবং উচ্চস্কোর গড়ো!</p>
+
+        <!-- Best Score Display -->
+        <div class="best-score-display" id="bestScoreDisplay" aria-live="polite">
+          <i class="fa-solid fa-trophy" aria-hidden="true"></i>
+          <span>Best Score: <strong id="bestScoreValue">0</strong></span>
+        </div>
+
+        <!-- Difficulty Selection -->
+        <div class="selection-group">
+          <h2 class="section-label"><i class="fa-solid fa-gauge-high" aria-hidden="true"></i> Difficulty নির্বাচন করো</h2>
+          <div class="option-grid" id="difficultyGrid" role="radiogroup" aria-label="Difficulty নির্বাচন">
+            <button class="option-chip active" data-difficulty="easy" role="radio" aria-checked="true">
+              <i class="fa-solid fa-seedling" aria-hidden="true"></i>
+              <span>Easy</span>
+              <small>2×2</small>
+            </button>
+            <button class="option-chip" data-difficulty="normal" role="radio" aria-checked="false">
+              <i class="fa-solid fa-bolt" aria-hidden="true"></i>
+              <span>Normal</span>
+              <small>4×4</small>
+            </button>
+            <button class="option-chip" data-difficulty="hard" role="radio" aria-checked="false">
+              <i class="fa-solid fa-fire" aria-hidden="true"></i>
+              <span>Hard</span>
+              <small>6×6</small>
+            </button>
+            <button class="option-chip" data-difficulty="expert" role="radio" aria-checked="false">
+              <i class="fa-solid fa-skull" aria-hidden="true"></i>
+              <span>Expert</span>
+              <small>8×8</small>
+            </button>
+          </div>
+        </div>
+
+        <!-- Theme Selection -->
+        <div class="selection-group">
+          <h2 class="section-label"><i class="fa-solid fa-palette" aria-hidden="true"></i> থিম নির্বাচন করো</h2>
+          <div class="option-grid theme-grid" id="themeGrid" role="radiogroup" aria-label="কার্ড থিম নির্বাচন">
+            <button class="option-chip active" data-theme-set="emoji" role="radio" aria-checked="true">
+              <span class="theme-preview">😀</span><span>Emoji</span>
+            </button>
+            <button class="option-chip" data-theme-set="animals" role="radio" aria-checked="false">
+              <span class="theme-preview">🐶</span><span>Animals</span>
+            </button>
+            <button class="option-chip" data-theme-set="fruits" role="radio" aria-checked="false">
+              <span class="theme-preview">🍎</span><span>Fruits</span>
+            </button>
+            <button class="option-chip" data-theme-set="space" role="radio" aria-checked="false">
+              <span class="theme-preview">🚀</span><span>Space</span>
+            </button>
+            <button class="option-chip" data-theme-set="ocean" role="radio" aria-checked="false">
+              <span class="theme-preview">🐠</span><span>Ocean</span>
+            </button>
+            <button class="option-chip" data-theme-set="flowers" role="radio" aria-checked="false">
+              <span class="theme-preview">🌸</span><span>Flowers</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Main Action Buttons -->
+        <div class="home-actions">
+          <button id="startGameBtn" class="btn btn-primary btn-lg">
+            <i class="fa-solid fa-play" aria-hidden="true"></i> Start Game
+          </button>
+          <div class="home-actions-row">
+            <button id="statsBtn" class="btn btn-secondary">
+              <i class="fa-solid fa-chart-simple" aria-hidden="true"></i> Statistics
+            </button>
+            <button id="achievementsBtn" class="btn btn-secondary">
+              <i class="fa-solid fa-medal" aria-hidden="true"></i> Achievements
+            </button>
+            <button id="settingsBtn" class="btn btn-secondary">
+              <i class="fa-solid fa-gear" aria-hidden="true"></i> Settings
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== GAME SCREEN ===================== -->
+    <section id="gameScreen" class="screen" aria-labelledby="gameTitleLabel">
+      <div class="game-hud">
+        <button id="backHomeBtn" class="icon-btn" aria-label="হোমে ফিরে যান" title="হোম">
+          <i class="fa-solid fa-house" aria-hidden="true"></i>
+        </button>
+
+        <h2 id="gameTitleLabel" class="sr-only">গেম চলছে</h2>
+
+        <div class="hud-stats">
+          <div class="hud-pill" title="সময়">
+            <i class="fa-solid fa-stopwatch" aria-hidden="true"></i>
+            <span id="timerValue" aria-live="off">00:00</span>
+          </div>
+          <div class="hud-pill" title="চাল">
+            <i class="fa-solid fa-shuffle" aria-hidden="true"></i>
+            <span id="movesValue">0</span>
+          </div>
+          <div class="hud-pill" title="স্কোর">
+            <i class="fa-solid fa-star" aria-hidden="true"></i>
+            <span id="scoreValue">0</span>
+          </div>
+          <div class="hud-pill combo-pill" title="কম্বো" id="comboPill" hidden>
+            <i class="fa-solid fa-fire" aria-hidden="true"></i>
+            <span id="comboValue">x1</span>
+          </div>
+        </div>
+
+        <button id="pauseBtn" class="icon-btn" aria-label="গেম পজ করুন" title="পজ">
+          <i class="fa-solid fa-pause" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <!-- Game Board -->
+      <div class="board-wrapper">
+        <div id="gameBoard" class="game-board" role="grid" aria-label="মেমোরি কার্ড বোর্ড"></div>
+      </div>
+
+      <!-- Game Tools -->
+      <div class="game-tools">
+        <button id="hintBtn" class="btn btn-tool" aria-label="হিন্ট ব্যবহার করুন">
+          <i class="fa-solid fa-lightbulb" aria-hidden="true"></i>
+          <span>Hint</span>
+          <span class="tool-count" id="hintCount">3</span>
+        </button>
+        <button id="shuffleBtn" class="btn btn-tool" aria-label="শাফল ব্যবহার করুন">
+          <i class="fa-solid fa-arrows-spin" aria-hidden="true"></i>
+          <span>Shuffle</span>
+          <span class="tool-count" id="shuffleCount">1</span>
+        </button>
+        <button id="restartBtn" class="btn btn-tool" aria-label="গেম রিস্টার্ট করুন">
+          <i class="fa-solid fa-rotate-right" aria-hidden="true"></i>
+          <span>Restart</span>
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== PAUSE OVERLAY ===================== -->
+  <div id="pauseOverlay" class="overlay" role="dialog" aria-modal="true" aria-labelledby="pauseTitle" hidden>
+    <div class="glass-card overlay-card">
+      <h2 id="pauseTitle"><i class="fa-solid fa-pause" aria-hidden="true"></i> গেম পজড</h2>
+      <p>একটু বিরতি নাও, যখন প্রস্তুত তখন আবার শুরু করো।</p>
+      <div class="overlay-actions">
+        <button id="resumeBtn" class="btn btn-primary"><i class="fa-solid fa-play" aria-hidden="true"></i> Resume</button>
+        <button id="pauseRestartBtn" class="btn btn-secondary"><i class="fa-solid fa-rotate-right" aria-hidden="true"></i> Restart</button>
+        <button id="pauseHomeBtn" class="btn btn-secondary"><i class="fa-solid fa-house" aria-hidden="true"></i> Home</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== RESULT OVERLAY ===================== -->
+  <div id="resultOverlay" class="overlay" role="dialog" aria-modal="true" aria-labelledby="resultTitle" hidden>
+    <canvas id="confettiCanvas" aria-hidden="true"></canvas>
+    <div class="glass-card overlay-card result-card">
+      <h2 id="resultTitle"><i class="fa-solid fa-trophy" aria-hidden="true"></i> অভিনন্দন!</h2>
+
+      <div class="stars-display" id="starsDisplay" aria-label="স্টার রেটিং">
+        <i class="fa-solid fa-star star" data-star="1" aria-hidden="true"></i>
+        <i class="fa-solid fa-star star" data-star="2" aria-hidden="true"></i>
+        <i class="fa-solid fa-star star" data-star="3" aria-hidden="true"></i>
+      </div>
+
+      <div class="result-stats">
+        <div class="result-stat">
+          <i class="fa-solid fa-star" aria-hidden="true"></i>
+          <span class="result-label">Final Score</span>
+          <span class="result-value" id="resultScore">0</span>
+        </div>
+        <div class="result-stat">
+          <i class="fa-solid fa-stopwatch" aria-hidden="true"></i>
+          <span class="result-label">Time</span>
+          <span class="result-value" id="resultTime">00:00</span>
+        </div>
+        <div class="result-stat">
+          <i class="fa-solid fa-shuffle" aria-hidden="true"></i>
+          <span class="result-label">Moves</span>
+          <span class="result-value" id="resultMoves">0</span>
+        </div>
+        <div class="result-stat">
+          <i class="fa-solid fa-trophy" aria-hidden="true"></i>
+          <span class="result-label">Best Score</span>
+          <span class="result-value" id="resultBest">0</span>
+        </div>
+      </div>
+
+      <div id="newRecordBadge" class="new-record-badge" hidden>
+        <i class="fa-solid fa-crown" aria-hidden="true"></i> নতুন রেকর্ড!
+      </div>
+
+      <div class="overlay-actions">
+        <button id="retryBtn" class="btn btn-primary"><i class="fa-solid fa-rotate-right" aria-hidden="true"></i> Retry</button>
+        <button id="nextGameBtn" class="btn btn-secondary"><i class="fa-solid fa-forward" aria-hidden="true"></i> Next Level</button>
+        <button id="resultHomeBtn" class="btn btn-secondary"><i class="fa-solid fa-house" aria-hidden="true"></i> Home</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== STATISTICS MODAL ===================== -->
+  <div id="statsModal" class="overlay" role="dialog" aria-modal="true" aria-labelledby="statsTitle" hidden>
+    <div class="glass-card overlay-card">
+      <button class="modal-close-btn" id="closeStatsBtn" aria-label="বন্ধ করুন"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+      <h2 id="statsTitle"><i class="fa-solid fa-chart-simple" aria-hidden="true"></i> Statistics</h2>
+      <div class="stats-grid" id="statsGrid">
+        <!-- JS দ্বারা পপুলেট হবে -->
+      </div>
+      <button id="resetStatsBtn" class="btn btn-danger">
+        <i class="fa-solid fa-trash" aria-hidden="true"></i> সব স্ট্যাটিসটিক্স রিসেট করো
+      </button>
+    </div>
+  </div>
+
+  <!-- ===================== ACHIEVEMENTS MODAL ===================== -->
+  <div id="achievementsModal" class="overlay" role="dialog" aria-modal="true" aria-labelledby="achievementsTitle" hidden>
+    <div class="glass-card overlay-card">
+      <button class="modal-close-btn" id="closeAchievementsBtn" aria-label="বন্ধ করুন"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+      <h2 id="achievementsTitle"><i class="fa-solid fa-medal" aria-hidden="true"></i> Achievements</h2>
+      <div class="achievements-list" id="achievementsList">
+        <!-- JS দ্বারা পপুলেট হবে -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== SETTINGS MODAL ===================== -->
+  <div id="settingsModal" class="overlay" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" hidden>
+    <div class="glass-card overlay-card">
+      <button class="modal-close-btn" id="closeSettingsBtn" aria-label="বন্ধ করুন"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+      <h2 id="settingsTitle"><i class="fa-solid fa-gear" aria-hidden="true"></i> Settings</h2>
+
+      <div class="settings-list">
+        <div class="settings-row">
+          <label for="darkModeToggle"><i class="fa-solid fa-moon" aria-hidden="true"></i> Dark Mode</label>
+          <input type="checkbox" id="darkModeToggle" class="switch-input" role="switch" />
+        </div>
+        <div class="settings-row">
+          <label for="soundToggle"><i class="fa-solid fa-volume-high" aria-hidden="true"></i> Sound Effects</label>
+          <input type="checkbox" id="soundToggle" class="switch-input" role="switch" checked />
+        </div>
+        <div class="settings-row">
+          <label for="musicToggle"><i class="fa-solid fa-music" aria-hidden="true"></i> Background Music</label>
+          <input type="checkbox" id="musicToggle" class="switch-input" role="switch" />
+        </div>
+        <div class="settings-row">
+          <label for="animationToggle"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Animations</label>
+          <input type="checkbox" id="animationToggle" class="switch-input" role="switch" checked />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== TOAST CONTAINER ===================== -->
+  <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- ===================== JS ===================== -->
+  <script src="script.js"></script>
+</body>
+</html>
