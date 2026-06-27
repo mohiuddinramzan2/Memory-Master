@@ -1,0 +1,26 @@
+{
+  "name": "memory-master",
+  "version": "1.0.0",
+  "description": "একটি আধুনিক, সুন্দর এবং সম্পূর্ণ Responsive **Memory Card Matching Game** — তৈরি করা হয়েছে শুধুমাত্র **HTML5, CSS3 এবং Vanilla JavaScript (ES6+)** দিয়ে, কোনো External Framework ছাড়াই।",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohiuddinramzan2/Memory-Master.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/mohiuddinramzan2/Memory-Master/issues"
+  },
+  "homepage": "https://github.com/mohiuddinramzan2/Memory-Master#readme",
+  "dependencies": {
+    "@capacitor/android": "^8.4.1",
+    "@capacitor/cli": "^8.4.1",
+    "@capacitor/core": "^8.4.1"
+  }
+}
